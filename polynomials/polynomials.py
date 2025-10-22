@@ -50,3 +50,29 @@ class Polynomial:
 
     def __radd__(self, other):
         return self + other
+    
+    def __sub__(self, other):
+
+        if isinstance(other, Polynomial):
+            neg_other_coeffs = tuple(-c for c in other.coefficients)
+
+            common = min(self.degree(), other.degree()) + 1
+            coefs = tuple(a + b for a, b in zip(self.coefficients,
+                                                neg_other_coeffs))
+            coefs += self.coefficients[common:] + neg_other_coeffs[common:]
+
+            return Polynomial(coefs)
+
+        elif isinstance(other, Number):
+            return Polynomial((self.coefficients[0] - other,)
+                              + self.coefficients[1:])
+
+        else:
+            return NotImplemented
+
+    def __rsub__(self, other):
+        # Calculates other - self
+        return other + (-self)
+
+    def __neg__(self):
+        return Polynomial(tuple(-c for c in self.coefficients))
