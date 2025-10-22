@@ -1,0 +1,125 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: exercise-3-3
+      id: exercise-3-3
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: exercise-3-3
+        setup-command: python3 -m venv venv; venv/bin/python -m pip install pytest numpy
+        command: "venv/bin/python -m pip install -e ."
+        timeout: 1
+        max-score: 1
+    - name: exercise-3-4-0
+      id: exercise-3-4-0
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: exercise-3-4-0
+        setup-command: ''
+        command: "venv/bin/python -m pytest tests/test_exercise_3_4_0.py"
+        timeout: 1
+        max-score: 1
+    - name: exercise-3-4-1
+      id: exercise-3-4-1
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: exercise-3-4-1
+        setup-command: ''
+        command: "venv/bin/python -m pytest tests/test_exercise_3_4_1.py"
+        timeout: 1
+        max-score: 1
+    - name: exercise-3-4-2
+      id: exercise-3-4-2
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: exercise-3-4-2
+        setup-command: ''
+        command: "venv/bin/python -m pytest tests/test_exercise_3_4_2.py"
+        timeout: 1
+        max-score: 1
+    - name: exercise-3-4-3
+      id: exercise-3-4-3
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: exercise-3-4-3
+        setup-command: ''
+        command: "venv/bin/python -m pytest tests/test_exercise_3_4_3.py"
+        timeout: 1
+        max-score: 1
+    - name: exercise-3-4-4
+      id: exercise-3-4-4
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: exercise-3-4-4
+        setup-command: ''
+        command: "venv/bin/python -m pytest tests/test_exercise_3_4_4.py"
+        timeout: 1
+        max-score: 1  
+    - name: exercise-3-5
+      id: exercise-3-5
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: exercise-3-5
+        setup-command: ''
+        command: "venv/bin/python -m pytest tests/test_exercise_3_5.py"
+        timeout: 1
+        max-score: 1
+    - name: exercise-3-6-1
+      id: exercise-3-6-1
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: exercise-3-6-1
+        setup-command: ''
+        command: "venv/bin/python -m pytest tests/test_exercise_3_6_1.py"
+        timeout: 1
+        max-score: 1
+    - name: exercise-3-6-2
+      id: exercise-3-6-2
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: exercise-3-6-2
+        setup-command: ''
+        command: "venv/bin/python -m pytest tests/test_exercise_3_6_2.py"
+        timeout: 1
+        max-score: 1
+    - name: exercise-3-6-3
+      id: exercise-3-6-3
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: exercise-3-6-3
+        setup-command: ''
+        command: "venv/bin/python -m pytest tests/test_exercise_3_6_3.py"
+        timeout: 1
+        max-score: 1  
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        EXERCISE-3-3_RESULTS: "${{steps.exercise-3-3.outputs.result}}"
+        EXERCISE-3-4-0_RESULTS: "${{steps.exercise-3-4-0.outputs.result}}"
+        EXERCISE-3-4-1_RESULTS: "${{steps.exercise-3-4-1.outputs.result}}"
+        EXERCISE-3-4-2_RESULTS: "${{steps.exercise-3-4-2.outputs.result}}"
+        EXERCISE-3-4-3_RESULTS: "${{steps.exercise-3-4-3.outputs.result}}"
+        EXERCISE-3-4-4_RESULTS: "${{steps.exercise-3-4-4.outputs.result}}"
+        EXERCISE-3-5_RESULTS: "${{steps.exercise-3-5.outputs.result}}"
+        EXERCISE-3-6-1_RESULTS: "${{steps.exercise-3-6-1.outputs.result}}"
+        EXERCISE-3-6-2_RESULTS: "${{steps.exercise-3-6-2.outputs.result}}"
+        EXERCISE-3-6-3_RESULTS: "${{steps.exercise-3-6-3.outputs.result}}"
+      with:
+        runners: exercise-3-3, exercise-3-4-0, exercise-3-4-1, exercise-3-4-2,
+          exercise-3-4-3, exercise-3-4-4, exercise-3-5, exercise-3-6-1,
+          exercise-3-6-2, exercise-3-6-3
