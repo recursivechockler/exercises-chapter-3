@@ -2,6 +2,9 @@ from numbers import Number
 from numbers import Integral
 from functools import reduce
 
+def derivative(poly):
+    return poly.dx()
+
 class Polynomial:
 
     def __init__(self, coefs):
@@ -99,3 +102,13 @@ class Polynomial:
     
     def __call__(self, scalar):
         return sum(coef * (scalar ** power) for power, coef in enumerate(self.coefficients))
+
+    def dx(self):
+        if isinstance(self, Polynomial):
+            if self.degree() == 0:
+                return Polynomial((0,))
+
+            coefs = [c * power for power, c in enumerate(self.coefficients)]
+            return Polynomial(tuple(coefs[1:]))
+        
+        return NotImplemented
