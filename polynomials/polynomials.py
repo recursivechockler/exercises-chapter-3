@@ -93,3 +93,6 @@ class Polynomial:
             
         else:
             return NotImplemented
+    
+    def __call__(self, scalar):
+        return sum(coef * (scalar ** power) for power, coef in enumerate(self.coefficients))
