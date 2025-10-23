@@ -5,6 +5,9 @@ from functools import reduce
 class Polynomial:
 
     def __init__(self, coefs):
+        while coefs[-1] == 0:
+            coefs = coefs[:-1]
+
         self.coefficients = coefs
 
     def degree(self):
