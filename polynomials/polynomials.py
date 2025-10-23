@@ -1,5 +1,6 @@
 from numbers import Number
-
+from numbers import Integral
+from functools import reduce
 
 class Polynomial:
 
@@ -80,4 +81,15 @@ class Polynomial:
             return NotImplemented
     
     def __rmul__(self, other):
-        return self * other # multiplication commutes
+        return self * other  # multiplication commutes
+    
+    def __pow__(self, power):
+
+        if isinstance(power, Integral):
+            if power > 0:
+                return reduce(lambda x, y: x * y, [self] * power)
+            else:
+                return NotImplemented
+            
+        else:
+            return NotImplemented
