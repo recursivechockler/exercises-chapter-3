@@ -59,3 +59,25 @@ class Polynomial:
 
     def __rsub__(self, other):
         return other + (-self)
+
+    def __mul__(self, other):
+
+        if isinstance(other, Number):
+            return Polynomial(tuple(c * other for c in self.coefficients))
+        
+        elif isinstance(other, Polynomial):
+            result = Polynomial((0,))
+
+            for power, coef in enumerate(other.coefficients):
+                product_coefs = tuple([0] * power) + self.coefficients
+                product_coefs = tuple(c * coef for c in product_coefs)
+
+                result += Polynomial(product_coefs)
+            
+            return result
+        
+        else:
+            return NotImplemented
+    
+    def __rmul__(self, other):
+        return self * other # multiplication commutes
